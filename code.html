@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drag and Drop Tic Tac Toe</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="app">
+    <div class="player-boxes">
+      <div
+          class="player-box"
+          draggable="true"
+          @dragstart="dragStart('X')"
+          :class="{ hidden: currentPlayer === 'O' }"
+      >
+          X
+      </div>
+      <div
+          class="player-box"
+          draggable="true"
+          @dragstart="dragStart('O')"
+          :class="{ hidden: currentPlayer === 'X' }"
+      >
+          O
+      </div>
+  </div>
+    <div class="board">
+      <div
+          class="cell"
+          v-for="(cell, index) in board"
+          :key="index"
+          :draggable="!cell"
+          @dragover.prevent
+          @drop="drop(index)"
+          :class="{ highlight: winningCombination.includes(index), 'fade-out': gameEnded }"
+      >
+          {{ cell }}
+      </div>
+  </div>
+  
+    <div class="game-info">
+      <button @click="fullResetGame()">Reset Game</button>
+      <div class="score">
+        <div>X wins: {{ xWins }}</div>
+        <div>O wins: {{ oWins }}</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
